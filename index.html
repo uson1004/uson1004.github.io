@@ -3,22 +3,39 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="브라우저에서 바로 쓰고 미리보는 개인 블로그 에디터">
-    <title>write. - 블로그 에디터</title>
+    <meta name="description" content="가볍게 쓰고, 임시저장하고, 출간하는 개인 블로그">
+    <title>write. - 개인 블로그</title>
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
     <div class="app-shell">
       <header class="app-header">
         <a class="brand" href="/" aria-label="write. 홈">write<span>.</span></a>
-        <div class="header-actions">
+        <div class="header-actions" id="home-actions">
           <button class="text-button" id="posts-button" type="button">저장한 글</button>
-          <span class="save-status" id="save-status" role="status">이 브라우저에 저장됩니다</span>
-          <button class="publish-button" id="publish-button" type="button">글 저장</button>
+          <button class="text-button" id="resume-draft-button" type="button">임시저장</button>
+          <button class="publish-button" id="new-post-button" type="button">글 작성</button>
+        </div>
+        <div class="header-actions" id="editor-actions" hidden>
+          <button class="text-button" id="back-home-button" type="button">홈</button>
+          <span class="save-status" id="save-status" role="status">임시저장되지 않음</span>
+          <button class="text-button" id="save-draft-button" type="button">임시저장</button>
+          <button class="publish-button" id="publish-button" type="button">출간하기</button>
         </div>
       </header>
 
-      <main class="editor-shell">
+      <main class="home-view" id="home-view">
+        <div class="home-inner">
+          <header class="home-heading">
+            <p>최근 글</p>
+            <h1>생각을 오래 남기는 곳</h1>
+            <span id="published-count">0개의 글</span>
+          </header>
+          <section class="post-feed" id="home-post-list" aria-live="polite"></section>
+        </div>
+      </main>
+
+      <main class="editor-shell" id="editor-view" hidden>
         <aside class="format-rail" aria-label="서식 도구">
           <button data-format="heading" type="button" aria-label="제목 넣기">H</button>
           <button data-format="bold" type="button" aria-label="굵게">B</button>
@@ -53,7 +70,7 @@
     <dialog class="posts-dialog" id="posts-dialog" aria-labelledby="posts-title">
       <div class="dialog-header">
         <div>
-          <p class="dialog-kicker">이 브라우저에 저장됨</p>
+          <p class="dialog-kicker">이 브라우저에 출간됨</p>
           <h2 id="posts-title">저장한 글</h2>
         </div>
         <button class="close-button" id="close-dialog" type="button" aria-label="글 목록 닫기">닫기</button>

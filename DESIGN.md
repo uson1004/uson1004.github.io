@@ -8,7 +8,7 @@
 
 ## 1. Atmosphere & Identity
 
-An unhurried, paper-bright writing desk for drafting ideas. The signature is a live reading pane beside the draft, so writing and its final shape stay visible together.
+An unhurried, paper-bright publishing desk that opens to a readable archive and narrows into a live writing space. The signature is a procession of long horizontal article cards: each card exposes date, title, and a short excerpt before the reader chooses to continue.
 
 ## 2. Color
 
@@ -56,14 +56,20 @@ Base unit: 4px.
 | `--space-6` | 24px | Pane padding |
 | `--space-8` | 32px | Major pane padding |
 
-The editor is a `scroll-body-shell`: the `--header-height` (68px) header and tool rail stay fixed within the shell; each writing and preview pane independently owns vertical scrolling at desktop. Below 800px, the rail becomes a wrapping top row and the panes stack as normal document sections. `--radius-small` is 6px for controls and panels.
+The home page uses a content-limiter of 1100px and one vertical card list. Every `post-card` is a desktop row with a 112px metadata column, a flexible title/excerpt column, and a trailing read action. Below 800px it becomes a three-part stack with no horizontal scroll. The editor is a `scroll-body-shell`: the `--header-height` (68px) header and tool rail stay fixed within the shell; the text input and preview independently own vertical scrolling at desktop. Below 800px, the rail becomes a wrapping top row and the panes stack as normal document sections. `--radius-small` is 6px for controls and panels.
 
 ## 5. Components
 
 ### App header
-- Structure: brand link, saved-post button, local-storage notice, primary save button.
-- States: visible focus ring, accent hover/active for primary action.
-- Accessibility: semantic buttons and a live status region.
+- Structure: brand link, archive button, draft resume action, and a primary writing or publishing action.
+- States: home state shows archive count and `글 작성`; editor state shows `임시저장` and `출간하기`.
+- Accessibility: semantic buttons, visible focus ring, and a live status region.
+
+### Post card
+- Structure: date metadata, title, excerpt, and `계속 읽기` button in a wide article row.
+- States: empty archive, default, hover, active, focus.
+- Accessibility: semantic `article`, heading, and an explicit action button.
+- Layout: vertical list, responsive stack below 800px.
 
 ### Format tool
 - Structure: compact text button in the formatting rail.
@@ -81,13 +87,13 @@ The editor is a `scroll-body-shell`: the `--header-height` (68px) header and too
 - Layout: content-limiter at 66ch.
 
 ### Saved-post dialog
-- Structure: native dialog with saved post list and load action.
+- Structure: native dialog with published post list and resume-writing action.
 - States: empty and populated.
 - Accessibility: native modal focus handling, labelled title, keyboard-close support.
 
 ## 6. Motion & Interaction
 
-Only 120ms `background-color`, `border-color`, `color`, and `transform` transitions communicate button feedback. Active controls translate 1px. Reduced-motion users receive instant state changes.
+Only 120ms `background-color`, `border-color`, `color`, and `transform` transitions communicate button feedback. Article cards shift their surface color and read action on hover. Active controls translate 1px. Reduced-motion users receive instant state changes.
 
 ## 7. Depth & Surface
 
@@ -100,3 +106,4 @@ WCAG target: 2.2 AA. Every control has visible keyboard focus, body text meets c
 | Item | Location | Why accepted | Owner / Exit |
 |---|---|---|---|
 | Browser-local storage only | `app.js` | GitHub Pages has no authenticated write backend | Add a server or GitHub OAuth-backed publish flow when shared publishing is required |
+| Browser-local publication | `app.js` | `출간하기` adds a card only in the current browser | Add shared publishing when an authenticated backend is available |
