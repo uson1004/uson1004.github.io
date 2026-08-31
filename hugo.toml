@@ -1,0 +1,14 @@
+baseURL = "https://uson1004.github.io/"
+locale = "ko-KR"
+defaultContentLanguage = "ko"
+title = "write."
+timeZone = "Asia/Seoul"
+enableRobotsTXT = true
+
+[markup.goldmark.renderer]
+unsafe = false
+
+[markup.tableOfContents]
+startLevel = 2
+endLevel = 3
+ordered = false
