@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
+    <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+    <link rel="canonical" href="{{ .Permalink }}">
+    <link rel="icon" href="{{ "favicon.svg" | relURL }}" type="image/svg+xml">
+    {{ $css := resources.Get "css/main.css" | minify | fingerprint }}
+    <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
+    {{ template "_internal/opengraph.html" . }}
+    {{ template "_internal/twitter_cards.html" . }}
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">본문으로 건너뛰기</a>
+    <header class="site-header">
+      <nav class="site-nav" aria-label="주요 메뉴">
+        <a class="brand" href="{{ "/" | relURL }}" aria-label="write. 홈">write<span>.</span></a>
+        <ul class="nav-links">
+          <li><a href="{{ "/" | relURL }}"{{ if .IsHome }} aria-current="page"{{ end }}>홈</a></li>
+          <li><a href="{{ "/posts/" | relURL }}"{{ if eq .Section "posts" }} aria-current="page"{{ end }}>글 목록</a></li>
+          <li><a class="author-link" href="https://github.com/uson1004/uson1004.github.io#readme" aria-label="GitHub 저장소의 글 작성 가이드 열기">글 쓰기</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main class="site-main" id="main-content">
+      {{ block "main" . }}{{ end }}
+    </main>
+    <footer class="site-footer">Markdown과 Git으로 관리하는 정적 블로그</footer>
+  </body>
+</html>

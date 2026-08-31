@@ -1,0 +1,19 @@
+{{ $pages := where .Site.RegularPages "Section" "posts" }}
+{{ $pages = where $pages "Draft" false }}
+{{ $pages = $pages.ByDate.Reverse }}
+<section class="post-feed" aria-label="글 목록">
+  {{ if $pages }}
+    {{ range $pages }}
+      <article class="post-row">
+        <time class="post-date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006년 1월 2일" }}</time>
+        <div class="post-row-copy">
+          <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+          <p>{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 150 }}{{ end }}</p>
+        </div>
+        <a class="read-link" href="{{ .RelPermalink }}">계속 읽기</a>
+      </article>
+    {{ end }}
+  {{ else }}
+    <p class="empty-feed">아직 공개된 글이 없습니다. <a href="https://github.com/uson1004/uson1004.github.io#readme">Markdown으로 첫 글을 작성하세요.</a></p>
+  {{ end }}
+</section>

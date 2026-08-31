@@ -1,0 +1,11 @@
+{{ define "main" }}
+  <section class="home">
+    <header class="home-heading">
+      <p class="eyebrow">최근 글</p>
+      <h1>{{ .Title }}</h1>
+      <p class="lede">{{ .Description }}</p>
+      <p class="post-count">{{ len (where .Site.RegularPages "Section" "posts") }}개의 글</p>
+    </header>
+    {{ partial "post-list.html" . }}
+  </section>
+{{ end }}

@@ -1,0 +1,19 @@
+{{ define "main" }}
+  <div class="post-layout">
+    <article class="post-content">
+      <header class="post-header">
+        <p class="post-meta"><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006년 1월 2일" }}</time></p>
+        <h1>{{ .Title }}</h1>
+        {{ with .Description }}<p class="post-description">{{ . }}</p>{{ end }}
+      </header>
+      {{ .Content }}
+      <p class="post-back"><a class="back-link" href="{{ "/posts/" | relURL }}">글 목록으로</a></p>
+    </article>
+    {{ with .TableOfContents }}
+      <aside class="post-toc" aria-label="이 글의 목차">
+        <h2>목차</h2>
+        {{ . }}
+      </aside>
+    {{ end }}
+  </div>
+{{ end }}

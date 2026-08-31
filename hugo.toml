@@ -4,6 +4,7 @@ defaultContentLanguage = "ko"
 title = "write."
 timeZone = "Asia/Seoul"
 enableRobotsTXT = true
+disableKinds = ["taxonomy", "term"]
 
 [markup.goldmark.renderer]
 unsafe = false

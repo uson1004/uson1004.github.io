@@ -1,0 +1,10 @@
+{{ define "main" }}
+  <section class="section-page">
+    <header class="section-heading">
+      <p class="eyebrow">아카이브</p>
+      <h1>{{ .Title }}</h1>
+      {{ with .Description }}<p class="lede">{{ . }}</p>{{ end }}
+    </header>
+    {{ partial "post-list.html" . }}
+  </section>
+{{ end }}

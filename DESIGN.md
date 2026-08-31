@@ -2,13 +2,13 @@
 
 ## 0. Research Log
 
-- Reference: reviewed a live Velog editor screen reference - retained the light, two-pane Markdown writing grammar, compact formatting rail, and green action accent without copying its branding or copy.
-- Embedded references: Velog is not in the local reference library; `taste-skill.md` supplied editorial-product guardrails and `layout-skill.md` supplied the bounded split-pane shell.
-- Skipped lanes: image concepts are unnecessary for an editor with no image-led surface; broader product-screen research is unnecessary because the user named the editor reference.
+- Reference: reviewed tilnote.io's GitHub Pages guide and article layout. Retained only the compact navigation, readable article measure, and desktop table-of-contents grammar. No logo, wording, image, CSS, or exact geometry is copied.
+- Publishing model: Hugo turns committed Markdown in `content/posts/` into static pages. GitHub Actions deploys the generated artifact to Pages.
+- Skipped lanes: images, external fonts, and a JavaScript theme control are unnecessary for this text-first static blog.
 
 ## 1. Atmosphere & Identity
 
-An unhurried, paper-bright publishing desk that opens to a readable archive and narrows into a live writing space. The signature is a procession of long horizontal article cards: each card exposes date, title, and a short excerpt before the reader chooses to continue.
+An unhurried, paper-bright static blog for reading and maintaining long-lived notes. The signature is a procession of long horizontal article rows: each exposes date, title, and a short excerpt before the reader continues into a focused article page.
 
 ## 2. Color
 
@@ -56,44 +56,33 @@ Base unit: 4px.
 | `--space-6` | 24px | Pane padding |
 | `--space-8` | 32px | Major pane padding |
 
-The home page uses a content-limiter of 1100px and one vertical card list. Every `post-card` is a desktop row with a 112px metadata column, a flexible title/excerpt column, and a trailing read action. Below 800px it becomes a three-part stack with no horizontal scroll. The editor is a `scroll-body-shell`: the `--header-height` (68px) header and tool rail stay fixed within the shell; the text input and preview independently own vertical scrolling at desktop. Below 800px, the rail becomes a wrapping top row and the panes stack as normal document sections. `--radius-small` is 6px for controls and panels.
+The home and section pages use a content-limiter of 1100px and one vertical post list. Every `post-row` is a desktop row with a 112px metadata column, a flexible title/excerpt column, and a trailing read link. An article keeps prose within 66ch. Below 800px rows stack without horizontal scroll and the desktop TOC returns to normal document flow. `--radius-small` is 6px for links and code blocks.
 
 ## 5. Components
 
 ### App header
-- Structure: brand link, archive button, draft resume action, and a primary writing or publishing action.
-- States: home state shows archive count and `글 작성`; editor state shows `임시저장` and `출간하기`.
-- Accessibility: semantic buttons, visible focus ring, and a live status region.
+- Structure: brand link, home link, post archive link, and repository authoring-guide link.
+- States: current page is marked with `aria-current`.
+- Accessibility: semantic navigation, visible focus ring, and a skip link.
 
-### Post card
+### Post row
 - Structure: date metadata, title, excerpt, and `계속 읽기` button in a wide article row.
-- States: empty archive, default, hover, active, focus.
-- Accessibility: semantic `article`, heading, and an explicit action button.
+- States: empty archive, default, hover, and focus.
+- Accessibility: semantic `article`, heading, and an explicit destination link.
 - Layout: vertical list, responsive stack below 800px.
 
-### Format tool
-- Structure: compact text button in the formatting rail.
-- States: default, hover, active, keyboard focus.
-- Accessibility: accessible label and visible focus ring.
+### Post article and table of contents
+- Structure: article header, publication date, title, description, Markdown body, back link, and Hugo-generated H2/H3 TOC.
+- States: TOC is sticky only at desktop width and normal flow on mobile.
+- Accessibility: TOC links point to existing headings and every heading uses scroll margin under the fixed header.
 
-### Draft fields
-- Structure: title input and body textarea.
-- States: empty, editing, invalid.
-- Accessibility: explicit labels and `aria-describedby` guidance.
-
-### Live preview
-- Structure: article element with empty state or sanitized Markdown rendering.
-- States: empty and populated.
-- Layout: content-limiter at 66ch.
-
-### Saved-post dialog
-- Structure: native dialog with published post list and resume-writing action.
-- States: empty and populated.
-- Accessibility: native modal focus handling, labelled title, keyboard-close support.
+### Not-found page
+- Structure: Korean 404 copy and a real home link.
+- Accessibility: no redirect or fake success response.
 
 ## 6. Motion & Interaction
 
-Only 120ms `background-color`, `border-color`, `color`, and `transform` transitions communicate button feedback. Article cards shift their surface color and read action on hover. Active controls translate 1px. Reduced-motion users receive instant state changes.
+Only 120ms `background-color`, `border-color`, `color`, and `transform` transitions communicate hover and focus changes on article rows and links. Reduced-motion users receive instant state changes.
 
 ## 7. Depth & Surface
 
@@ -105,5 +94,4 @@ WCAG target: 2.2 AA. Every control has visible keyboard focus, body text meets c
 
 | Item | Location | Why accepted | Owner / Exit |
 |---|---|---|---|
-| Browser-local storage only | `app.js` | GitHub Pages has no authenticated write backend | Add a server or GitHub OAuth-backed publish flow when shared publishing is required |
-| Browser-local publication | `app.js` | `출간하기` adds a card only in the current browser | Add shared publishing when an authenticated backend is available |
+| Legacy browser data | pre-Hugo UI | Existing `write.*` keys remain in each browser but cannot be auto-imported into Git | Copy values through the README recipe and convert them to Markdown manually |
